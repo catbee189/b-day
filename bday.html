@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🎁 Happy 19th Birthday MJ!</title>
+  <style>
+    :root {
+      --bg1: #ffe4f0;
+      --bg2: #ffd6e8;
+      --accent: #ff5c8a;
+      --accent2: #ff80ab;
+      --gold: #ffd166;
+      --box: #ff4d88;
+      --lid: #ff80a6;
+      --ribbon: #ff99cc;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .15);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(120% 120% at 20% 20%, var(--bg1), var(--bg2));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .scene {
+      position: relative;
+      width: min(560px, 92vw);
+      height: min(560px, 92vw);
+      display: grid;
+      place-items: center;
+    }
+
+    /* Balloons */
+    .balloons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .5s ease .2s;
+    }
+    body.open .balloons { opacity: 1; }
+
+    .balloon {
+      position: absolute;
+      width: 44px;
+      height: 56px;
+      border-radius: 50% 50% 45% 45%;
+      background: linear-gradient(180deg, #fff 0%, var(--accent) 40%, #d6336c 100%);
+      box-shadow: inset 0 -10px 18px rgba(0, 0, 0, .15);
+      animation: float 8s linear infinite;
+    }
+    .balloon:after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -18px;
+      width: 2px;
+      height: 22px;
+      background: #333;
+    }
+    .balloon.i2 { left: 12%; animation-duration: 9s; background: linear-gradient(180deg, #fff, var(--accent2)); }
+    .balloon.i3 { left: 78%; animation-duration: 7.5s; background: linear-gradient(180deg, #fff, #ffb3c6); }
+    .balloon.i4 { left: 50%; animation-duration: 10s; background: linear-gradient(180deg, #fff, #f59e0b); }
+
+    @keyframes float {
+      0%   { top: 100%; }
+      100% { top: -30%; }
+    }
+
+    /* Gift Box */
+    .gift {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      transform: translateY(20px);
+      animation: bounce 2.4s ease-in-out infinite;
+    }
+
+    .box {
+      width: 240px;
+      height: 180px;
+      background: var(--box);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    .box:before, .box:after {
+      content: "";
+      position: absolute;
+      background: var(--ribbon);
+    }
+    .box:before {
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 100%;
+    }
+    .box:after {
+      top: 60px;
+      left: 0;
+      right: 0;
+      height: 22px;
+      border-radius: 10px;
+    }
+
+    /* Lid */
+    .lid {
+      position: absolute;
+      width: 270px;
+      height: 65px;
+      background: var(--lid);
+      left: 50%;
+      transform: translateX(-50%);
+      top: -40px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      transition: transform .7s cubic-bezier(.2, .8, .2, 1), top .7s ease;
+    }
+    .lid:before, .lid:after {
+      content: "";
+      position: absolute;
+      background: var(--ribbon);
+    }
+    .lid:before {
+      left: 50%;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 100%;
+      border-radius: 14px;
+    }
+    .lid:after {
+      top: 18px;
+      left: 18px;
+      right: 18px;
+      height: 14px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #ffe4ec, #ffcfe1);
+    }
+
+    /* Bow */
+    .bow {
+      position: absolute;
+      top: -26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 50px;
+    }
+    .loop {
+      position: absolute;
+      width: 48px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--gold));
+      box-shadow: inset -6px -8px 12px rgba(0, 0, 0, .15);
+    }
+    .loop.left { left: 0; transform: rotate(-18deg); }
+    .loop.right { right: 0; transform: rotate(18deg); }
+    .knot {
+      position: absolute;
+      left: 50%;
+      top: 14px;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--gold));
+      box-shadow: inset -5px -6px 10px rgba(0, 0, 0, .18);
+    }
+
+    /* Card */
+    .card {
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translate(-50%, -50%) scale(.6);
+      width: 92vw;
+      max-width: 480px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: .6s ease .1s;
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      max-height: 240px;
+      object-fit: contain;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      background: #f9fafb;
+    }
+    .title {
+      font-size: clamp(20px, 5vw, 28px);
+      margin: 6px 0;
+      color: #d6336c;
+    }
+    .subtitle {
+      font-size: clamp(14px, 4vw, 16px);
+      margin: 0 0 6px;
+      color: #6b7280;
+    }
+    .cake {
+      font-size: 38px;
+      margin: 6px 0;
+    }
+    .cta {
+      margin-top: 8px;
+      display: inline-block;
+      padding: 8px 14px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #fff;
+      border-radius: 9999px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    /* Open State */
+    body.open .lid {
+      top: -120px;
+      transform: translateX(-50%) rotate(-25deg);
+    }
+    body.open .card {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+
+    /* Hint */
+    .hint {
+      position: absolute;
+      top: 12%;
+      width: 100%;
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: .6; transform: translateY(0); }
+      50%     { opacity: 1; transform: translateY(-2px); }
+    }
+
+    /* Confetti */
+    #confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+    body.open #confetti { opacity: 1; }
+
+    /* Bounce */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(20px); }
+      50%      { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti"></canvas>
+
+  <audio id="music" src="birthday.mp3" preload="auto"></audio>
+
+  <div class="scene">
+    <div class="hint">Tap the gift to open 🎉</div>
+
+    <div class="gift" id="gift">
+      <div class="lid"> 
+        <div class="bow">
+          <span class="loop left"></span>
+          <span class="loop right"></span>
+          <span class="knot"></span>
+        </div>
+      </div>
+      <div class="box"></div>
+    </div>
+
+    <div class="card" id="card">
+      <img src="./Screenshot 2025-08-22 092043.png" alt="Birthday" />
+      <h2 class="title">Happy 19th Birthday, MJ! 🎂</h2>
+      <p class="subtitle">Wishing you a day as amazing and bright as you are! 💖</p>
+      <div class="cake">🎂</div>
+      <a class="cta" href="#" id="again">Open Again</a>
+    </div>
+
+    <div class="balloons">
+      <div class="balloon i1" style="left:22%"></div>
+      <div class="balloon i2"></div>
+      <div class="balloon i3"></div>
+      <div class="balloon i4"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById('confetti');
+      const ctx = canvas.getContext('2d');
+      let W, H, pieces = [], running = false, raf;
+
+      function resize() {
+        W = canvas.width = innerWidth;
+        H = canvas.height = innerHeight;
+      }
+      addEventListener('resize', resize);
+      resize();
+
+      function Confetti() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * -H;
+        this.size = 6 + Math.random() * 8;
+        this.rot = Math.random() * 360;
+        this.speed = 1 + Math.random() * 3;
+        this.swing = Math.random() * 2;
+        this.spin = (Math.random() - .5) * 10;
+        this.shape = Math.random() > .5 ? 'rect' : 'circle';
+        this.color = `hsl(${Math.floor(Math.random() * 360)} 70% 65%)`;
+      }
+
+      Confetti.prototype.draw = function () {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rot * Math.PI / 180);
+        ctx.fillStyle = this.color;
+        if (this.shape === 'rect') {
+          ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.7);
+        } else {
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      };
+
+      Confetti.prototype.update = function () {
+        this.y += this.speed;
+        this.x += Math.sin(this.y / 20) * this.swing;
+        this.rot += this.spin * 0.1;
+        if (this.y - 20 > H) {
+          this.y = -20;
+          this.x = Math.random() * W;
+        }
+      };
+
+      function populate(n) {
+        pieces = Array.from({ length: n }, () => new Confetti());
+      }
+
+      function loop() {
+        if (!running) return;
+        ctx.clearRect(0, 0, W, H);
+        pieces.forEach(p => { p.update(); p.draw(); });
+        raf = requestAnimationFrame(loop);
+      }
+
+      function start(duration = 5000) {
+        if (running) return;
+        running = true;
+        populate(Math.min(250, Math.floor(W * H / 6000)));
+        loop();
+        setTimeout(() => {
+          running = false;
+          cancelAnimationFrame(raf);
+          ctx.clearRect(0, 0, W, H);
+        }, duration);
+      }
+
+      window.launchConfetti = start;
+    })();
+
+    const gift = document.getElementById('gift');
+    const again = document.getElementById('again');
+    const music = document.getElementById('music');
+
+    function openGift() {
+      if (document.body.classList.contains('open')) return;
+      document.body.classList.add('open');
+      launchConfetti(6000);
+      music.currentTime = 0;
+      music.play();
+    }
+
+    gift.addEventListener('click', openGift);
+    again.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.body.classList.remove('open');
+      music.pause();
+      music.currentTime = 0;
+      setTimeout(openGift, 80);
+    });
+
+    gift.setAttribute('tabindex', '0');
+    gift.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') openGift();
+    });
+  </script>
+</body>
+</html>
